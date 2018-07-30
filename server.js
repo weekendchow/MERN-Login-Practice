@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const items = require('./routes/api/items');
+const signin = require('./routes/api/signin');
 
 const app = express();
 
@@ -13,12 +13,12 @@ app.use(bodyParser.json())
 const db = require('./config/keys').mongoURI;
 
 //connect to mongoose
-mongoose.connect(db)
+mongoose.connect(db, { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err));
 
 //use routes
-app.use('/api/items', items);
+app.use('/api/account', signin);
 
 const port = process.env.PORT || 5000;
 

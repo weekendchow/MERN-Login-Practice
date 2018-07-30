@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Home from './component/Home';
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>This is a MERN Stack starter. Start Building!</h1>
+        <Home />
       </div>
     );
   }

@@ -6,7 +6,6 @@
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -14,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "concurrently": "^3.6.1",
     "express": "^4.16.3",
