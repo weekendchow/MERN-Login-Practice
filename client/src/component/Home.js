@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { getFromStorage, setInStorage } from '../utils/storage';
 
+import { verifyApi, signinApi, signupApi, logoutApi } from '../utils/APIhelper'
+
 class Home extends Component {
   state = {
     isLoading: true,
@@ -20,8 +22,7 @@ class Home extends Component {
     if(obj && obj.token) {
       const { token } = obj;
       // verify token
-      fetch('/api/account/verify?token=' + token)
-        .then(res => res.json())
+      verifyApi(token)
         .then(json => {
           if(json.success) {
             this.setState({
@@ -88,18 +89,7 @@ class Home extends Component {
       isLoading: true
     })
     //POST request to backend
-    fetch('/api/account/signin', {
-      method: 'POST',
-      headers : {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        email: signInEmail,
-        password: signInPassword,
-      })
-    })
-      .then(res => res.json())
+    signinApi(signInEmail, signInPassword)
       .then(json => {
         console.log('json', json);
         if(json.success) {
@@ -119,6 +109,8 @@ class Home extends Component {
         }
 
       });
+
+
   }
 
   onSignUp = e => {
@@ -134,20 +126,7 @@ class Home extends Component {
       isLoading: true
     })
     //POST request to backend
-    fetch('/api/account/signup', {
-      method: 'POST',
-      headers : {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        firstName: signUpFirstName,
-        lastName: signUpLastName,
-        email: signUpEmail,
-        password: signUpPassword,
-      })
-    })
-      .then(res => res.json())
+    signupApi(signUpFirstName, signUpLastName, signUpEmail, signUpPassword)
       .then(json => {
         console.log('json', json);
         if(json.success) {
@@ -171,14 +150,13 @@ class Home extends Component {
 
   logout = e => {
     this.setState({
-      isLoading: true,
+      isLoading: true
     })
     const obj = getFromStorage('the_main_app');
     if(obj && obj.token) {
       const { token } = obj;
       // verify token
-      fetch('/api/account/logout?token=' + token)
-        .then(res => res.json())
+      logoutApi(token)
         .then(json => {
           if(json.success) {
             this.setState({
